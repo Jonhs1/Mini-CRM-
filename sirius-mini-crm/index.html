@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14243a">
+  <meta
+    name="description"
+    content="Mini-CRM inteligente para organizar contatos e analisar oportunidades comerciais."
+  >
+
+  <title>Mini CRM | Gestão de contatos</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <a href="#" class="brand" aria-label="Sirius CRM - página inicial">
+        <span class="brand-icon">S</span>
+        <span class="brand-name">Sirius<span>CRM</span></span>
+      </a>
+
+      <div class="sidebar-label">MENU PRINCIPAL</div>
+
+      <nav aria-label="Menu principal">
+        <a href="#dashboard" class="nav-link active">
+          <span aria-hidden="true">▦</span>
+          Visão geral
+        </a>
+
+        <a href="#contatos" class="nav-link">
+          <span aria-hidden="true">♙</span>
+          Contatos
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="status-dot"></span>
+        <span>João Victor Miranda</span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">GESTÃO COMERCIAL</p>
+          <h1>Mini-CRM Inteligente</h1>
+          <p class="page-description">
+            Organize contatos e identifique oportunidades com IA.
+          </p>
+        </div>
+
+        <div class="topbar-badge">
+          <span aria-hidden="true">✦</span>
+          Assistente inteligente
+        </div>
+      </header>
+
+      <section class="metrics" aria-label="Resumo dos contatos">
+        <article class="metric-card">
+          <div class="metric-heading">
+            <span>Total de contatos</span>
+            <span class="metric-icon blue" aria-hidden="true">♙</span>
+          </div>
+          <p class="metric-value" id="totalContatos">0</p>
+          <p class="metric-caption">Contatos cadastrados</p>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-heading">
+            <span>Novos</span>
+            <span class="metric-icon purple" aria-hidden="true">＋</span>
+          </div>
+          <p class="metric-value" id="totalNovos">0</p>
+          <p class="metric-caption">Aguardando atendimento</p>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-heading">
+            <span>Em atendimento</span>
+            <span class="metric-icon orange" aria-hidden="true">◷</span>
+          </div>
+          <p class="metric-value" id="totalAtendimento">0</p>
+          <p class="metric-caption">Oportunidades em andamento</p>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-heading">
+            <span>Finalizados</span>
+            <span class="metric-icon green" aria-hidden="true">✓</span>
+          </div>
+          <p class="metric-value" id="totalFinalizados">0</p>
+          <p class="metric-caption">Atendimentos concluídos</p>
+        </article>
+      </section>
+
+      <section class="content-card" id="contatos">
+
+        <div class="section-heading">
+          <div>
+            <h2>Gerenciamento de contatos</h2>
+            <p>Cadastre interessados e acompanhe suas oportunidades.</p>
+          </div>
+
+          <button class="button button-primary" id="btnNovoContato"
+            type="button">
+            + Novo contato
+          </button>
+        </div>
+
+        <form id="formContato" class="contact-form" hidden>
+          <div class="form-heading">
+            <h3 id="tituloFormulario">Cadastrar contato</h3>
+            <button type="button" class="button-close"
+              id="btnFecharFormulario" aria-label="Fechar formulário">
+              ×
+            </button>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="nome">Nome completo</label>
+              <input
+                id="nome"
+                name="nome"
+                type="text"
+                placeholder="Ex.: Maria Oliveira"
+                maxlength="120"
+                autocomplete="name"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp</label>
+              <input
+                id="whatsapp"
+                name="whatsapp"
+                type="tel"
+                placeholder="Ex.: (11) 99999-0000"
+                maxlength="25"
+                autocomplete="tel"
+                required
+              >
+            </div>
+
+            <div class="form-group form-group-full">
+              <label for="mensagem">Mensagem do interessado</label>
+              <textarea
+                id="mensagem"
+                name="mensagem"
+                rows="4"
+                maxlength="3000"
+                placeholder="Descreva o que o interessado deseja..."
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="button button-secondary"
+              id="btnCancelar">
+              Cancelar
+            </button>
+            <button type="submit" class="button button-primary"
+              id="btnSalvar">
+              Salvar contato
+            </button>
+          </div>
+        </form>
+
+        <div class="toolbar">
+          <div class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="buscaContato"
+              type="search"
+              placeholder="Buscar por nome ou WhatsApp..."
+              aria-label="Buscar contatos"
+            >
+          </div>
+
+          <label class="filter-control">
+            <span>Status:</span>
+            <select id="filtroStatus">
+              <option value="Todos">Todos</option>
+              <option value="Novo">Novo</option>
+              <option value="Em atendimento">Em atendimento</option>
+              <option value="Finalizado">Finalizado</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>CONTATO</th>
+                <th>MENSAGEM</th>
+                <th>STATUS</th>
+                <th>ANÁLISE IA</th>
+                <th>AÇÕES</th>
+              </tr>
+            </thead>
+
+            <tbody id="listaContatos">
+              <tr>
+                <td colspan="5" class="empty-state">
+                  <div class="empty-icon" aria-hidden="true">♙</div>
+                  <strong>Nenhum contato cadastrado</strong>
+                  <p>Adicione seu primeiro contato para começar.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <span id="contadorContatos">0 contatos</span>
+          <span>Dados armazenados neste navegador</span>
+        </div>
+      </section>
+
+      <footer class="app-footer">
+        <span>Sirius CRM</span>
+        <span>Mini-CRM inteligente · Projeto demonstrativo</span>
+      </footer>
+
+    </main>
+  </div>
+
+  <div id="notificacoes" class="notifications"
+    aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
